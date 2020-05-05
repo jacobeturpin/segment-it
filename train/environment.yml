@@ -1,0 +1,12 @@
+name: segment-it
+channels:
+  - defaults
+dependencies:
+  - pandas
+  - tensorboard
+  - python=3.7
+  - tensorflow-gpu
+  - pip
+  - pip:
+      - tensorflowjs
+
