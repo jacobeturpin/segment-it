@@ -8,5 +8,5 @@ dependencies:
   - tensorflow-gpu
   - pip
   - pip:
-      - tensorflowjs
+      - tensorflowjs --no-deps
 
