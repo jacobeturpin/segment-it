@@ -5,9 +5,35 @@
     <title>Title</title>
 </head>
 <body>
+    <img id="sample" src="./train/models/example.jpg">
+    <canvas id="output"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
     <script>
-        tf.loadLayersModel('./train/models/tfjs-example/model.json', false);
+        const model = tf.loadLayersModel('./train/models/tfjs-example/model.json', false);
+
+        function loadImage(imageId) {
+            img = (document.getElementById(imageId));
+            return tf.browser.fromPixels(img);
+        }
+
+        async function predict() {
+            const model = await tf.loadLayersModel('./train/models/tfjs-example/model.json', false);
+            model.summary();
+            t = model.predict(
+                loadImage("sample").reshape([1, 128, 128, 3])
+            )
+            console.log(t.shape)
+            t.print();
+
+            const min = t.min();
+            const max = t.max();
+            normalized = t.sub(min).div(max.sub(min));
+
+            tf.browser.toPixels(normalized.reshape([128, 128, 3]),
+                document.getElementById("output"));
+        }
+
+        test = predict();
     </script>
 
 </body>
